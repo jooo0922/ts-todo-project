@@ -1,3 +1,6 @@
+// npm 을 통해 설치한 eslint 에 의해
+// ts 문법을 보조하고 있다고 보면 됨.
+
 module.exports = {
   root: true,
   env: {
