@@ -2,7 +2,8 @@
   "compilerOptions": {
     "allowJs": true,
     "checkJs": true,
-    "noImplicitAny": false
+    "noImplicitAny": true // 모든 타입은 any라도 반드시 넣어주어야 한다는 뜻. 
+    // -> 이걸 true 로 활성화하는 순간 타입이 없는 index.ts 에서 에러를 띄워줌. 
   },
   "include": ["./src/**/*"]
 }
