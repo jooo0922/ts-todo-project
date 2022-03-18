@@ -28,14 +28,55 @@
  * 리턴값을 void 로 지정해놓는 것과 동일한 문법!
  */
 
+/**
+ * 타입 별칭
+ *
+ * 아래의 코드를 보면 알겠지만,
+ * { id: number; title: string; done: boolean }
+ * 이런 식으로 길게 늘여쓴 타입이 계속 반복적으로 사용되고 있지?
+ *
+ * 근데 저 property가 수십 수백개로 늘어난다면?
+ * 저 타입을 일일이 다 달아줘야 하나?
+ * 너무 비효율적이고 가독성도 떨어짐!
+ *
+ * 그래서 미리 타입을 정의해두고, 거기에 이름(타입 별칭)을 붙여서
+ * 이후에는 그 이름만 가져와서 타입을 지정할 수 있게
+ * 하려고 만든 것이 타입 별칭이라고 함!
+ */
+// type Todo = {
+//   id: number;
+//   title: string;
+//   done: boolean;
+// };
+
+/**
+ * 인터페이스
+ *
+ * 위에 처럼 타입별칭을 만들 수도 있지만,
+ * 이후 수업에서 배울 개념인 '인터페이스'를 사용해서
+ * 미리 타입을 인터페이스로 정의해놓고,
+ *
+ * 해당 인터페이스를 이후 코드에서
+ * 반복적으로 사용해서 타입을 지정하는 방법도 있음!
+ *
+ * 이렇게 타입을 미리 정의해두고 사용하면
+ * 훨씬 코드가 깔끔해짐.
+ */
+interface Todo {
+  id: number;
+  title: string;
+  done: boolean;
+}
+
 // 참고로 object[] 이런식으로 오브젝트가 들어가는 배열이다 라고 할수도 있지만,
 // {오브젝트 속성 구체적 타입들}[] 이런 식으로도 디테일한 수준까지 타입 정의가 가능함!
 // "오브젝트가 들어가는 배열이다" 만이 아니라 "이러이러한 속성값들로 구성된 오브젝트가 들어가는 배열이다" 수준으로
 // 구체적인 타입 정의가 가능하다는 뜻!
-let todoItems: { id: number; title: string; done: boolean }[]; // 오브젝트가 들어가는 배열이다 라는 뜻.
+// let todoItems: { id: number; title: string; done: boolean }[]; // 오브젝트가 들어가는 배열이다 라는 뜻.
+let todoItems: Todo[]; // 이런 식으로 미리 정의해 둔 인터페이스를 가져와서 타입을 지정할 수 있음.
 
 // api (실제 api는 아니지만, api라고 가정하고 만들어 놓은 것.)
-function fetchTodoItems(): { id: number; title: string; done: boolean }[] {
+function fetchTodoItems(): Todo[] {
   // 반환 타입 또한 객체가 담긴 배열로 지정함.
   const todos = [
     { id: 1, title: "안녕", done: false },
@@ -53,7 +94,7 @@ function fetchTodos(): object[] {
   return todos;
 }
 
-function addTodo(todo: { id: number; title: string; done: boolean }): void {
+function addTodo(todo: Todo): void {
   todoItems.push(todo);
 }
 
@@ -65,10 +106,7 @@ function deleteTodo(index: number): void {
 // 에러가 난 부분을 마우스 hover 하면 ts 에러 코드와 함께
 // 왜 에러가 났는지에 대한 설명을 보여줌. 이거를 잘 참고해서
 // 구글링 검색 해보든지 하면서 작성하는게 좋음.
-function completeTodo(
-  index: number,
-  todo: { id: number; title: string; done: boolean }
-): void {
+function completeTodo(index: number, todo: Todo): void {
   todo.done = true;
   todoItems.splice(index, 1, todo);
 }
@@ -79,9 +117,7 @@ function logFirstTodo(): object {
 }
 
 function showCompleted(): object[] {
-  return todoItems.filter(
-    (item: { id: number; title: string; done: boolean }) => item.done
-  );
+  return todoItems.filter((item: Todo) => item.done);
   // 위에 filter 사용하는 걸 좀 쉽게 풀어서 쓴게 아래의 코드임.
   // return todoItems.filter((item) => {
   //   if (item.done) {
